@@ -13,10 +13,10 @@ namespace Payment_API.Models
         public int Id { get; set; }
         [ForeignKey("Vendedor")]
         public int VendedorId { get; set; }
-        public virtual Vendedor Vendedor { get; set; }
+      
         [ForeignKey("Produtos")]
         public int ProdutosId { get; set; }
-        public virtual Produtos Produtos { get; set; }
+  
         public DateTime Data { get; set; }
         public StatusVendas Status { get; set; }
     }

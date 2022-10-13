@@ -58,6 +58,20 @@ namespace Payment_API.Controllers
             return Ok(vendas);
         }
         
+          [HttpDelete("DeletarVenda")]
+        public IActionResult Deletar(int id)
+        {
+            var vendas = _context.Vendas.Find(id);
+
+            if (vendas == null)
+            {
+                return NotFound();
+            }
+            _context.Vendas.Remove(vendas);
+            _context.SaveChanges();
+            return NoContent();
+        }
+        
         [HttpPost("AtualizarStatusPedidos")]
         public IActionResult Atualizar(int id, Vendas pedidos)
         {
@@ -113,7 +127,6 @@ namespace Payment_API.Controllers
             _context.SaveChanges();
             return Ok(pedidosBd);
         }
-        
 
     }
 }
