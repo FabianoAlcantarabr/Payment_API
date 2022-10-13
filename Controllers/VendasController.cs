@@ -28,7 +28,7 @@ namespace Payment_API.Controllers
 
             if(vendedor == null)
             {
-                return BadRequest(new { Erro = "Vendedor Não Cadastrado" });
+                return BadRequest(new { Erro = "Vendedor Não Cadastrado!" });
             }
 
             var produtos = _context.Produtos.Find(vendas.ProdutosId);
@@ -75,7 +75,7 @@ namespace Payment_API.Controllers
                 }
                 else
                 {
-                    return BadRequest(new { Erro = "Atualização não disponivel!" });    
+                    return BadRequest(new { Erro = "Atualização não Disponivel!" });    
                 }
             }
             else if(pedidosBd.Status == StatusVendas.Pagamento_Aprovado)
@@ -90,7 +90,7 @@ namespace Payment_API.Controllers
                 }
                 else
                 {
-                    return BadRequest(new { Erro = "Atualização não disponivel!" });    
+                    return BadRequest(new { Erro = "Atualização não Disponivel!" });    
                 }
             }
             else if(pedidosBd.Status == StatusVendas.Enviado_para_transportadora)
@@ -101,12 +101,12 @@ namespace Payment_API.Controllers
                 }
                 else
                 {
-                    return BadRequest(new { Erro = "Atualização não disponivel!" });
+                    return BadRequest(new { Erro = "Atualização não Disponivel!" });
                 }
             }
             else
             {
-                return BadRequest(new { Erro = "Atualização não disponivel!" });
+                return BadRequest(new { Erro = "Atualização não Disponivel!" });
             }
 
             _context.Vendas.Update(pedidosBd);
