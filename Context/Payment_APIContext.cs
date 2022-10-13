@@ -14,9 +14,9 @@ namespace Payment_API.Context
 
       } 
 
-       public DbSet<Produtos> Produtos {get; set; }
-        public DbSet<Vendas> Vendas {get; set; }
-        public DbSet<Vendedor> Vendedor {get; set; }
+      public DbSet<Produtos> Produtos {get; set; }
+      public DbSet<Vendas> Vendas {get; set; }
+      public DbSet<Vendedor> Vendedor {get; set; }
  
         
     }

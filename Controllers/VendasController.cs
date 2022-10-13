@@ -10,10 +10,10 @@ namespace Payment_API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class VendasControllers : ControllerBase
+    public class VendasController : ControllerBase
     {
         private readonly Payment_APIContext  _context;
-        public VendasControllers(Payment_APIContext context)
+        public VendasController(Payment_APIContext context)
         {
             _context = context;
         }
@@ -31,11 +31,11 @@ namespace Payment_API.Controllers
                 return BadRequest(new { Erro = "Vendedor Não Cadastrado" });
             }
 
-            var item = _context.Produtos.Find(vendas.ItemId);
+            var produtos = _context.Produtos.Find(vendas.ProdutosId);
 
-            if(item == null)
+            if(produtos == null)
             {
-                return BadRequest(new { Erro = "Item não cadastrado!" });
+                return BadRequest(new { Erro = "Produto não cadastrado!" });
             }
             
             _context.Add(vendas);
@@ -49,7 +49,7 @@ namespace Payment_API.Controllers
         {
             var vendas = _context.Vendas.Find(id);
             var vendedor = _context.Vendedor.Find(vendas.VendedorId);
-            var produtos = _context.Produtos.Find(vendas.ItemId);
+            var produtos = _context.Produtos.Find(vendas.ProdutosId);
 
             if(vendas == null){
                 return NotFound();
@@ -61,43 +61,43 @@ namespace Payment_API.Controllers
         [HttpPost("AtualizarStatusPedidos")]
         public IActionResult Atualizar(int id, Vendas pedidos)
         {
-            var pedidoBd = _context.Vendas.Find(pedidos.Id);
+            var pedidosBd = _context.Vendas.Find(pedidos.Id);
             
-            if (pedidoBd.Status == StatusVendas.Aguadando_Pagamento)
+            if (pedidosBd.Status == StatusVendas.Aguadando_Pagamento)
             {
                 if(pedidos.Status == StatusVendas.Pagamento_Aprovado)
                 {
-                    pedidoBd.Status = StatusVendas.Pagamento_Aprovado;
+                    pedidosBd.Status = StatusVendas.Pagamento_Aprovado;
                 }
                 else if(pedidos.Status == StatusVendas.Cancelado)
                 {
-                    pedidoBd.Status = StatusVendas.Cancelado;
+                    pedidosBd.Status = StatusVendas.Cancelado;
                 }
                 else
                 {
                     return BadRequest(new { Erro = "Atualização não disponivel!" });    
                 }
             }
-            else if(pedidoBd.Status == StatusVendas.Pagamento_Aprovado)
+            else if(pedidosBd.Status == StatusVendas.Pagamento_Aprovado)
             {
                 if(pedidos.Status == StatusVendas.Enviado_para_transportadora)
                 {
-                    pedidoBd.Status = StatusVendas.Enviado_para_transportadora;
+                    pedidosBd.Status = StatusVendas.Enviado_para_transportadora;
                 }
                 else if(pedidos.Status == StatusVendas.Cancelado)
                 {
-                    pedidoBd.Status = StatusVendas.Cancelado;
+                    pedidosBd.Status = StatusVendas.Cancelado;
                 }
                 else
                 {
                     return BadRequest(new { Erro = "Atualização não disponivel!" });    
                 }
             }
-            else if(pedidoBd.Status == StatusVendas.Enviado_para_transportadora)
+            else if(pedidosBd.Status == StatusVendas.Enviado_para_transportadora)
             {
                 if(pedidos.Status == StatusVendas.Entregue)
                 {
-                    pedidoBd.Status = StatusVendas.Entregue;
+                    pedidosBd.Status = StatusVendas.Entregue;
                 }
                 else
                 {
@@ -109,9 +109,9 @@ namespace Payment_API.Controllers
                 return BadRequest(new { Erro = "Atualização não disponivel!" });
             }
 
-            _context.Vendas.Update(pedidoBd);
+            _context.Vendas.Update(pedidosBd);
             _context.SaveChanges();
-            return Ok(pedidoBd);
+            return Ok(pedidosBd);
         }
         
 
